@@ -1,5 +1,5 @@
 import './App.css';
-import { Button, Fade, Paper, Grid, makeStyles, ButtonBase } from '@material-ui/core';
+import { Button, Fade, Paper, Grid, makeStyles, ButtonBase, ButtonGroup } from '@material-ui/core';
 import { useState } from 'react';
 import Card from './Card';
 
@@ -32,11 +32,7 @@ function App() {
   return (
     <div className="App">
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
-      <Fade in={shown}>
-      <Grid container spacing={3}>
-        <Button>
-          <Card className="card"/>
-        </Button>
+        <ButtonGroup>
         <ButtonBase>
           <Card className="card"/>
         </ButtonBase>
@@ -49,6 +45,8 @@ function App() {
         <ButtonBase>
           <Card className="card"/>
         </ButtonBase>
+        </ButtonGroup>
+        <ButtonGroup>
         <ButtonBase>
           <Card className="card"/>
         </ButtonBase>
@@ -58,8 +56,10 @@ function App() {
         <ButtonBase>
           <Card className="card"/>
         </ButtonBase>
-      </Grid>
-      </Fade>
+        <ButtonBase>
+          <Card className="card"/>
+        </ButtonBase>
+        </ButtonGroup>
       <div className="button">
       <Button className="Button" color="primary" variant="contained" onClick={change}>test</Button>
       </div>
