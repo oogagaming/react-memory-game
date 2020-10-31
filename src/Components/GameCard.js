@@ -14,18 +14,21 @@ export function GameCard(props) {
     }, [props.id, props.flipped, props.found])
   
     const flipCard = e => {
-        e.preventDefault()
+        // e.preventDefault()
         if (props.found || props.flipped) return;
         props.flip(e.target.id);
       };
     
+      const cardBack = {
+        background: "#3700B3",
+      }
     return (
-        <div className="unFlipped">
+        <div className="card">
         <ReactCardFlip isFlipped={flipped} flipDirection="vertical">
           <div id={id}
             className="memoryCard front"
             onClick={flipCard}
-            // style={cardBack}
+            style={cardBack}
             key="front"
           />
           <div

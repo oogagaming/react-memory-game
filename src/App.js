@@ -15,7 +15,15 @@ function App() {
   })
 
   const createId = () => {
-    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    const ids = []
+    let id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+    while(ids.includes(id)) {
+      id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+      ids.push(id)
+    }
+    ids.push(id)
+    console.log(ids)
+    return id;
   }
 
   const makeDeck = () => {
@@ -24,21 +32,22 @@ function App() {
     for (let i = 1; i < amount + 1; i++) {
       let id = createId();
       let id2 = createId();
-      let rand = Math.floor(Math.random() * 300) + 1;
+      let rand = Math.floor(Math.random() * 13) + 1;
       const card1 = {
         id: id,
         matchesId: id2,
-        url: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${rand}.png`,
+        url: `pictures/meme${rand}.png`,
         flipped: false,
         found: false,
       }
       const card2 = {
         id: id2,
         matchesId: id,
-        url: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${rand}.png`,
+        url: `pictures/meme${rand}.png`,
         flipped: false,
         found: false,
       }
+      console.log(`pictures/meme${rand}.png`)
       gamecards.push(card1);
       gamecards.push(card2);
     }
