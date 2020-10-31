@@ -1,0 +1,14 @@
+root {
+    background-color: black;
+}
+.unFlipped {
+    /* padding: 100px; */
+    background-color: cornflowerblue;
+    /* padding: 1vw; */
+    /* width: 100px; */
+}
+
+
+.cards {
+    display: flex;
+}
