@@ -1,10 +1,19 @@
 import React, { useEffect, useState, useRef } from 'react'
 import GameCard from './GameCard';
 import './GameBoard.css'
-import { Grid } from '@material-ui/core';
+import { Grid, Container } from '@material-ui/core';
+
+function useForceUpdate(){
+  const [value, setValue] = useState(0); // integer state
+  console.log(value)
+  return () => setValue(value => ++value); // update the state to force render
+}
 
 export function Gameboard(props) {
+    const _ = require('lodash/core');
     const [gamecards, setGamecards] = useState([]);
+
+    const forceUpdate = useForceUpdate();
 
     const prevCountRef = useRef();
     useEffect(() => {
@@ -27,15 +36,12 @@ export function Gameboard(props) {
       };
 
     const flipCard = (id, cb) => {
-        setGamecards(prevCount => (
-          {
-            gamecards: prevCount.map(card => {
+        setGamecards(gamecards.map(card => {
               if (card.id === id) {
                 card.flipped = true;
               }
               return card;
             })
-          })
         );
         
       };
@@ -61,13 +67,9 @@ export function Gameboard(props) {
         const flippedCards = gamecards.filter(card => card.flipped && !card.found);
         let one = gamecards.indexOf(flippedCards[0])
         let two = gamecards.indexOf(flippedCards[1])
-        console.log(flippedCards)
-        console.log(two)
         if (flippedCards[0].matchesId === flippedCards[1].id ||
           flippedCards[1].matchesId === flippedCards[0].id) {
-            console.log("if")
-          setGamecards(prevCount => ({
-            gamecards: prevCount.gamecards.map(card => {
+          setGamecards(gamecards.map(card => {
               switch (card.id) {
                 case flippedCards[0].id:
                 case flippedCards[1].id:
@@ -77,21 +79,24 @@ export function Gameboard(props) {
                   return card;
               }
             })
-          }));
+          ); 
+          hasWon();
         } else {
           setTimeout(() => {
             gamecards[one].flipped = false;
             gamecards[two].flipped = false;
             setGamecards(gamecards);
+            forceUpdate();
           }, 800);
         }
       };
 
-
     const hasWon = () => {
-        let won = gamecards.every(card => card.found);
-        if (won) {
-          props.won();
+      let cards = _.map(gamecards, 'found')
+
+        if(cards.every(x => x)) {
+          console.log("won")
+          props.won()
         }
       };
 
@@ -116,6 +121,7 @@ export function Gameboard(props) {
           
     }
         return (
+          <Container maxWidth="lg" fixed={true} disableGutters={true}>
           <Grid 
             container 
             spacing={3} 
@@ -125,6 +131,7 @@ export function Gameboard(props) {
           >
             {createBoard()}
             </Grid>
+            </Container>
         );
     }
 

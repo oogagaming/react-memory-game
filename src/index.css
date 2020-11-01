@@ -6,7 +6,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   box-sizing: border-box;
-  background: #1B1B1B;
+  background: #1b1b1b;
+  /* background-image: url(pictures/meme10.png); */
 }
 .message{
   color: #fff;
@@ -21,14 +22,14 @@ h2{
   text-align: left;
 }
 .memoryCard{
-  height: 80px;
+  height: 96px;
   width: 120px;
   border: 1.5px solid transparent;
   transition: all .3s ease-in;
 }
 .memoryCard.front:hover{
   cursor: pointer;
-  border: 1.5px solid rgb(40,111,251, 0.5);
+  border: 1.5px solid rgba(145, 145, 145, 0.5);
 }
 .btn {
   padding: 12px 25px;
@@ -53,7 +54,7 @@ h2{
 }
 .card{
   flex: 1 0 calc(21% - 1em);
-  padding: 60px 0 6px 0;
+  padding: 65px 0 6px 0;
 }
 .menu{
   margin: 0 auto;
@@ -71,7 +72,7 @@ h2{
     align-items: space-between;
   }
   .memoryCard{
-    height: 50px;
+    height: 96px;
     width: 80px;
   }
 }

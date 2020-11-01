@@ -1,12 +1,16 @@
 import React, { useEffect, useState} from 'react'
+import useSound from 'use-sound'
 import './GameCard.css';
 import ReactCardFlip from 'react-card-flip';
+import front from '../pictures/front.png'
+import Card from '../Sounds/Card.ogg'
 
 export function GameCard(props) {
     const [id, setId] = useState();
     const [flipped, setFlipped] = useState();
     const [found, setFound] = useState();
-    
+    const [play] = useSound(Card)
+
     useEffect(() => {
         setId(props.id);
         setFlipped(props.flipped);
@@ -14,35 +18,29 @@ export function GameCard(props) {
     }, [props.id, props.flipped, props.found])
   
     const flipCard = e => {
-        // e.preventDefault()
-        if (props.found || props.flipped) return;
+        e.preventDefault()
+        play();
+        if (found || flipped) return;
         props.flip(e.target.id);
       };
-    
-      const cardBack = {
-        background: "#3700B3",
-      }
     return (
         <div className="card">
         <ReactCardFlip isFlipped={flipped} flipDirection="vertical">
-          <div id={id}
+          <img
+            id={id}
             className="memoryCard front"
             onClick={flipCard}
-            style={cardBack}
+            //style={cardBack}
             key="front"
+            src={front}
+            alt=""
           />
           <div
             className="memoryCard"
-            onClick={flipCard}
+            // onClick={flipCard}
             key="back"
-            style={{
-              backgroundImage: `url(${props.imgUrl})`,
-              backgroundSize: "contain",
-              backgroundRepeat: "no-repeat", backgroundPosition: "center",
-              backgroundColor: found ? "green" : "#3700B3",
-              cursor : found ? "" : "pointer",
-            }}
           >
+             <img src={props.imgUrl} width="96" height="96" alt="" />
           </div>
         </ReactCardFlip>
       </div>
