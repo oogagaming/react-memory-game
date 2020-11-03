@@ -1,13 +1,22 @@
 .App {
   text-align: center;
-  margin-top: 5vh;
+  overflow: hidden;
 }
 
 .Button {
   margin-top: 20vh;
 }
 
+.buttonMobile {
+  margin-top: 25vh;
+}
 
 .button {
-  margin-top: 5vh;
+    margin-top: 15%;
+}
+
+#container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }

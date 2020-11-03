@@ -121,7 +121,7 @@ export function Gameboard(props) {
           
     }
         return (
-          <Container maxWidth="lg" fixed={true} disableGutters={true}>
+          <Container maxWidth="lg" fixed={true} disableGutters={true} className="cont">
           <Grid 
             container 
             spacing={3} 

@@ -1,0 +1,9 @@
+.TimeFlipPC {
+    display: flex;
+    justify-content: space-between;
+    width: 20%;
+}
+
+.win {
+    margin-left: 7%;
+}

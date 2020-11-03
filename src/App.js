@@ -16,6 +16,8 @@ import meme10 from './pictures/meme10.png'
 import meme11 from './pictures/meme11.png'
 import meme12 from './pictures/meme12.png'
 import meme13 from './pictures/meme13.png'
+import { Header } from './Components/Header';
+import { BrowserView, MobileView } from 'react-device-detect';
 
 
 function App() {
@@ -23,6 +25,31 @@ function App() {
   const [newGame, setNewGame] = useState()
   const [won, setWon] = useState(false)
   const [clicks, setClicks] = useState(0);
+  const [startGame, setStart] = useState(true)
+  const [seconds, setSeconds] = useState(0);
+  const [isActive, setIsActive] = useState(false);
+
+  function toggle() {
+      setIsActive(!isActive);
+  }
+
+  function reset() {
+      setSeconds(0);
+      setIsActive(false);
+  }
+
+  useEffect(() => {
+      let interval = null;
+      if (isActive) {
+      interval = setInterval(() => {
+          setSeconds(seconds => seconds + 1);
+      }, 1000);
+      } else if (!isActive && seconds !== 0) {
+      clearInterval(interval);
+      }
+      return () => clearInterval(interval);
+  }, [isActive, seconds]);
+
 
   const prevCountRef = useRef();
   useEffect(() => {
@@ -141,29 +168,42 @@ function App() {
     makeDeck();
     setNewGame(true);
     setWon(false)
+    setStart(false)
+    setClicks(0)
+    reset()
+    toggle()
   };
 
   const countClicks = () => {
-    setClicks((prevCountRef) => ({
-        clicks : prevCountRef.clicks + 1
-    }));
+    setClicks(clicks + 1);
   }
 
   const hasWon = () => {
     setWon(true)
+    setNewGame(false)
+    toggle()
   }
 
   return (
     <div className="App">
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
       <link rel="icon" href={meme6} />
-        {won ? <h1 style={{color: 'white'}}>You Win</h1> : null}
-        {newGame ? <Gameboard cards={cards} won={hasWon} click={countClicks}/>: <h1 style={{color: 'white'}}>Memeory Game</h1> }
+      <Header clicks={clicks} won={won} seconds={seconds}/>
+        {newGame ? <Gameboard cards={cards} won={hasWon} click={countClicks}/>:  null}
         
-      <div className="button">
-        {won ? <Button className="Button" color="primary" variant="contained" onClick={initGame}>Play Again</Button>:null}
-        {!newGame ? <Button className="Button" color="primary" variant="contained" onClick={initGame}>Play</Button> : null}
-      </div>
+      <BrowserView>
+        <div className="button">
+          {won ? <Button className="Button" color="primary" variant="contained" onClick={initGame}>Play Again</Button> : null}
+          {startGame ? <Button className="Button" color="primary" variant="contained" onClick={initGame}>Play</Button>: null}
+        </div>
+      </BrowserView>
+
+      <MobileView>
+        <div className="buttonMobile">
+          {won ? <Button className="Button" color="primary" variant="contained" onClick={initGame}>Play Again</Button> : null}
+          {startGame ? <Button className="Button" color="primary" variant="contained" onClick={initGame}>Play</Button>: null}
+        </div>
+      </MobileView>
     </div>
   );
 }
