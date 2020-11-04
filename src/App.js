@@ -27,7 +27,9 @@ function App() {
   const [clicks, setClicks] = useState(0);
   const [startGame, setStart] = useState(true)
   const [seconds, setSeconds] = useState(0);
+  const [minutes, setMinutes] = useState(0);
   const [isActive, setIsActive] = useState(false);
+  const [cardsNum, setCardsNum] = useState(12);
 
   function toggle() {
       setIsActive(!isActive);
@@ -46,6 +48,10 @@ function App() {
       }, 1000);
       } else if (!isActive && seconds !== 0) {
       clearInterval(interval);
+      }
+      if(seconds >= 60) {
+        setMinutes(minutes => minutes + 1)
+        setSeconds(0)
       }
       return () => clearInterval(interval);
   }, [isActive, seconds]);
@@ -67,8 +73,12 @@ function App() {
     return id;
   }
 
+  const handleChange = (event) => {
+    setCardsNum(event.target.value);
+  };
+
   const makeDeck = () => {
-    let amount = 13;
+    let amount = cardsNum;
     let gamecards = [];
     for (let i = 1; i < amount + 1; i++) {
       let id = createId();
@@ -188,7 +198,7 @@ function App() {
     <div className="App">
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
       <link rel="icon" href={meme6} />
-      <Header clicks={clicks} won={won} seconds={seconds}/>
+      <Header clicks={clicks} won={won} seconds={seconds} minutes={minutes} cardsNum={cardsNum} handleChange={handleChange}/>
         {newGame ? <Gameboard cards={cards} won={hasWon} click={countClicks}/>:  null}
         
       <BrowserView>
@@ -196,6 +206,7 @@ function App() {
           {won ? <Button className="Button" color="primary" variant="contained" onClick={initGame}>Play Again</Button> : null}
           {startGame ? <Button className="Button" color="primary" variant="contained" onClick={initGame}>Play</Button>: null}
         </div>
+        
       </BrowserView>
 
       <MobileView>

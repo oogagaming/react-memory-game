@@ -20,3 +20,7 @@
   justify-content: space-between;
   width: 100%;
 }
+
+#cards-label, #demo-simple-select {
+  color: white;
+}
